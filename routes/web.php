@@ -28,4 +28,4 @@ require __DIR__.'/auth.php';
 
 Route::get('board', function () {
     return Inertia::render('Board');
-});
+})->middleware('auth');
