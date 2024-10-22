@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BoardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -14,9 +15,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/boards', function () {
+//     return Inertia::render('Boards');
+// })->middleware(['auth', 'verified'])->name('boards');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -24,8 +25,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    Route::get('/board/{board}', [BoardController::class, 'show'])->name('boards.show');
+    Route::put('/board/{board}', [BoardController::class, 'update'])->name('boards.update');
+    Route::get('/boards', [BoardController::class, 'index'])->name('boards');
+    Route::post('/boards', [BoardController::class, 'store'])->name('boards.store');
+});
+
 require __DIR__.'/auth.php';
 
-Route::get('board', function () {
-    return Inertia::render('Board');
-})->middleware('auth');
+// Route::get('board', function () {
+//     return Inertia::render('Board');
+// })->middleware('auth');

@@ -1,7 +1,8 @@
 <script setup>
-// import {Link} from '@inertiajs/inertia-vue3';
+import { Link } from '@inertiajs/inertia-vue3';
+
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue';
-// import NavLink from '@/Components/NavLink';
+import NavLink from '@/Components/NavLink.vue';
 
 </script>
  

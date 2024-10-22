@@ -2,7 +2,12 @@
 // import {DotsHorizontalIcon, PencilIcon, PlusIcon} from "@heroicons/vue/solid";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import Authenticated from '@/Layouts/Authenticated.vue';
+import BoardNameForm from '@/Components/BoardNameForm.vue';
 
+
+const props= defineProps({
+  board:Object
+});
 </script>
 
 <template>
@@ -11,8 +16,8 @@ import Authenticated from '@/Layouts/Authenticated.vue';
      
       <main class="flex-1 overflow-hidden">
         <div class="flex flex-col h-full">
-          <div class="flex items-center justify-between p-4 shrink-0">
-            <h1 class="font-bold text-white text 2xl">Board Title</h1>
+          <div class="flex flex-wrap items-center justify-between p-4 shrink-0">
+            <BoardNameForm :board="board"/>
             <div>
               <button
                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-white rounded-md bg white/10 hover: bg-white/20"

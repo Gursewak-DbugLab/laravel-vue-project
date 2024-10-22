@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Board;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class BoardController extends Controller
@@ -14,7 +15,7 @@ class BoardController extends Controller
     public function index()
     {
         return Inertia::render('Boards', [
-            'boards' => auth()->user()->boards,
+            'boards' => Auth::user()->boards,
         ]);
     }
 
@@ -31,7 +32,16 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required'],
+        ]);
+
+        Board::create([
+            'user_id' => Auth::user()->id,
+            'name' => $request['name'],
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -39,8 +49,9 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
-        return Inertia::render('Board');
-
+        return Inertia::render('Board', [
+            'board' => $board,
+        ]);
     }
 
     /**
@@ -56,7 +67,15 @@ class BoardController extends Controller
      */
     public function update(Request $request, Board $board)
     {
-        //
+        $request->validate([
+            'name' => ['required'],
+        ]);
+
+        $board->update([
+            'name' => $request['name'],
+        ]);
+
+        return redirect()->back();
     }
 
     /**
