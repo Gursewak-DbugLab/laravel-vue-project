@@ -1,23 +1,22 @@
 <script setup>
 // import {DotsHorizontalIcon, PencilIcon, PlusIcon} from "@heroicons/vue/solid";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import Authenticated from '@/Layouts/Authenticated.vue';
-import BoardNameForm from '@/Components/BoardNameForm.vue';
+import Authenticated from "@/Layouts/Authenticated.vue";
+import BoardNameForm from "@/Components/BoardNameForm.vue";
+import CreateBoardListForm from "@/Components/CreateBoardListForm.vue";
 
-
-const props= defineProps({
-  board:Object
+const props = defineProps({
+  board: Object,
 });
 </script>
 
 <template>
   <Authenticated>
     <div class="flex flex-col h-screen bg-red-600">
-     
       <main class="flex-1 overflow-hidden">
         <div class="flex flex-col h-full">
           <div class="flex flex-wrap items-center justify-between p-4 shrink-0">
-            <BoardNameForm :board="board"/>
+            <BoardNameForm :board="board" />
             <div>
               <button
                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-white rounded-md bg white/10 hover: bg-white/20"
@@ -30,11 +29,14 @@ const props= defineProps({
           <div class="flex-1 overflow-x-auto">
             <div class="inline-flex items-start h-full px-4 pb-4 space-x-4">
               <div
-                v-for="item in Array.from({ length: 4 })"
+                v-for="list in board.lists"
+                key="list.id"
                 class="flex flex-col max-h-full bg-gray-200 rounded-md w-72"
               >
                 <div class="flex items-center justify-between px-3 py-2">
-                  <h3 class="text-sm font-semibold text-gray-700">Backlog</h3>
+                  <h3 class="text-sm font-semibold text-gray-700">
+                    {{ list.name }}
+                  </h3>
                   <Menu as="div" class="relative z-10">
                     <MenuButton
                       class="grid w-8 h-8 rounded-md hover:bg-gray-300 place-content-center"
@@ -110,12 +112,7 @@ const props= defineProps({
                 </div>
               </div>
               <div class="w-72">
-                <button
-                  class="flex items-center w-full p-2 text-sm font-medium rounded-md bg-white/10 hover:bg-black/20"
-                >
-                  <PlusIcon class="w-5 h-5" />
-                  <span> Add Another List </span>
-                </button>
+                <CreateBoardListForm :board="board" />
               </div>
             </div>
           </div>
