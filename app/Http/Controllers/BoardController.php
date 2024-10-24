@@ -14,7 +14,7 @@ class BoardController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Boards', [
+        return Inertia::render('Boards/Index', [
             'boards' => Auth::user()->boards,
         ]);
     }
@@ -49,9 +49,9 @@ class BoardController extends Controller
      */
     public function show(Board $board)
     {
-        $board->load('lists');
+        $board->load('lists.cards');
 
-        return Inertia::render('Board', [
+        return Inertia::render('Boards/Show', [
             'board' => $board,
         ]);
     }

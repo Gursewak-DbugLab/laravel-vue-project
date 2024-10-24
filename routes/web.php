@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\BoardController;
-use App\Http\Controllers\BoardListController;
+use App\Http\Controllers\CardListController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +32,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/boards', [BoardController::class, 'store'])->name('boards.store');
     Route::put('/board/{board}', [BoardController::class, 'update'])->name('boards.update');
 
-    Route::post('/boards/{board}/lists', [BoardListController::class, 'store'])->name('boardLists.store');
+    Route::post('/boards/{board}/lists', [CardListController::class, 'store'])->name('cardLists.store');
 });
 
 require __DIR__.'/auth.php';

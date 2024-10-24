@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Board;
+use App\Models\Card;
+use App\Models\CardList;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -22,7 +24,19 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('test@example'),
         ]);
 
-        Board::factory(10)->for($user)->create();
+        $boards = Board::factory(10)->for($user)->create();
 
+        foreach ($boards as $board) {
+            $cardList = CardList::factory()->create([
+                'user_id' => $user->id,
+                'board_id' => $board->id,
+            ]);
+
+            Card::factory(50)->create([
+                'user_id' => $user->id,
+                'board_id' => $board->id,
+                'card_list_id' => $cardList->id,
+            ]);
+        }
     }
 }

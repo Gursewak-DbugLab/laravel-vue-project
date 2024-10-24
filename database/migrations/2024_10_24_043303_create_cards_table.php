@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('board_lists', function (Blueprint $table) {
+        Schema::create('cards', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('board_id')->constrained()->onDelete('cascade');
+            $table->foreignId('card_list_id')->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->longText('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('board_lists');
+        Schema::dropIfExists('cards');
     }
 };

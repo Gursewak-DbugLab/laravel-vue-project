@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\BoardList>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CardList>
  */
-class BoardListFactory extends Factory
+class CardListFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,7 @@ class BoardListFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->name(),
         ];
     }
 }
