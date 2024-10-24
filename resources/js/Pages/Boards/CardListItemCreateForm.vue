@@ -4,8 +4,10 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import { nextTick, ref, watch } from "vue";
 
 const props = defineProps({
-  board: Object,
+  list: Object,
 });
+
+const emit = defineEmits(["created"]);
 
 async function showForm() {
   isShowingForm.value = true;
@@ -14,15 +16,18 @@ async function showForm() {
 }
 
 function onSubmit() {
-  form.post(route("cardLists.store", { board: props.board.id }), {
+  form.post(route("cards.store"), {
     onSuccess: () => {
       form.reset();
       inputNameRef.value.focus();
+      emit("created");
     },
   });
 }
 const form = useForm({
-  name: "",
+  title: "",
+  card_list_id: props.list.id,
+  board_id: props.list.board_id,
 });
 const inputNameRef = ref();
 const isShowingForm = ref(false);
@@ -32,20 +37,20 @@ const isShowingForm = ref(false);
     @keydown.esc="isShowingForm = false"
     v-if="isShowingForm"
     @submit.prevent="onSubmit()"
-    class="p-3 bg-gray-200 rounded-md"
   >
-    <input
-      v-model="form.name"
+    <textarea
+      v-model="form.title"
       ref="inputNameRef"
+      rows="3"
+      @keydown.enter.prevent="onSubmit()"
       class="block w-full text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-400 focus:ring-blue-400"
-      type="text"
-      placeholder="Enter list Name..."
-    />
+      placeholder="Enter Card Title..."
+    ></textarea>
     <div class="mt-2 space-x-2">
       <Button
         type="submit"
         class="px-4 py=2 text-sm font-medium text-white bg-rose-600 hover:bg-rose-500 rounded-md shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 focus:outline-none"
-        >Add List</Button
+        >Add Card</Button
       >
       <Button
         type="button"
@@ -55,12 +60,13 @@ const isShowingForm = ref(false);
       >
     </div>
   </form>
+
   <button
     v-if="!isShowingForm"
     @click="showForm()"
-    class="flex items-center w-full p-2 text-sm font-medium rounded-md bg-white/10 hover:bg-black/20"
+    class="flex w-full p-2 text-sm font-medium text-gray-600 rounded-md item-center hover:text-black hover:bg-gray-300"
   >
-    <PlusIcon class="w-5 h-5" />
-    <span> Add Another List </span>
+    <PlusIcon class="w-5 h-5"> </PlusIcon>
+    <Span class="ml-1"> Add Card </Span>
   </button>
 </template>

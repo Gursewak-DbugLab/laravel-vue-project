@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('test@example'),
         ]);
 
-        $boards = Board::factory(10)->for($user)->create();
+        $boards = Board::factory(2)->for($user)->create();
 
         foreach ($boards as $board) {
             $cardList = CardList::factory()->create([
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
                 'board_id' => $board->id,
             ]);
 
-            Card::factory(50)->create([
+            Card::factory(2)->create([
                 'user_id' => $user->id,
                 'board_id' => $board->id,
                 'card_list_id' => $cardList->id,

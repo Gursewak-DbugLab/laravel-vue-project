@@ -1,10 +1,17 @@
 <script setup>
 // import {DotsHorizontalIcon, PencilIcon, PlusIcon} from "@heroicons/vue/solid";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
+import CardListItemCreateForm from "@/Pages/Boards/CardListItemCreateForm.vue";
+import { ref } from "vue";
 
 const props = defineProps({
   list: Object,
 });
+
+const listRef = ref();
+function onCardCreated() {
+  listRef.value.scrollTop = listRef.value.scrollHeight;
+}
 </script>
 
 <template>
@@ -52,7 +59,7 @@ const props = defineProps({
       </Menu>
     </div>
     <div class="flex flex-col pb-3 overflow-hidden">
-      <div class="flex-1 px-3 overflow-y-auto">
+      <div class="flex-1 px-3 overflow-y-auto" ref="listRef">
         <ul class="space-y-3">
           <li
             v-for="card in list.cards"
@@ -66,25 +73,10 @@ const props = defineProps({
               <PencilIcon class="w-5 h-5" />
             </button>
           </li>
-          <li
-            class="relative p-3 bg-white border-b border-gray-300 group shadow-rounded-md hover:border-gray-500"
-          >
-            <a href="#" class="text-sm"> Card item </a>
-            <button
-              class="absolute hidden w-8 h-8 text-gray-600 bg-gray-500 rounded-md group-hover:grid top-1 right-1 place-content-center hover:text-black hover:bg-gray-200"
-            >
-              <PencilIcon class="w-5 h-5" />
-            </button>
-          </li>
         </ul>
       </div>
       <div class="px-3 mt-3">
-        <button
-          class="flex w-full p-2 text-sm font-medium text-gray-600 rounded-md item-center hover:text-black hover:bg-gray-300"
-        >
-          <PlusIcon class="w-5 h-5"> </PlusIcon>
-          <Span class="ml-1"> Add Card </Span>
-        </button>
+        <CardListItemCreateForm @created="onCardCreated()" :list="list" />
       </div>
     </div>
   </div>
