@@ -1,7 +1,7 @@
 <script setup>
 import { PlusIcon } from "@heroicons/vue/24/outline";
 import { useForm } from "@inertiajs/inertia-vue3";
-import { nextTick, ref, watch } from "vue";
+import { nextTick, ref, computed } from "vue";
 import { store } from "@/store";
 
 const props = defineProps({
@@ -31,6 +31,7 @@ const form = useForm({
   board_id: props.list.board_id,
 });
 const inputNameRef = ref();
+
 const isShowingForm = computed(
   () => props.list.id === store.value.listCreatingCardId
 );

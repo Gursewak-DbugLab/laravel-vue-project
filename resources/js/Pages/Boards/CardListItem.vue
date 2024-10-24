@@ -17,13 +17,14 @@ async function showForm() {
 
 function onSubmit() {
   form.put(route("cards.update", { card: props.card.id }), {
-    onSuccess: () => (store.value.editingCardId = null),
+    onSuccess: () => (store.editingCardId = null),
   });
 }
 const form = useForm({
   title: props.card.title,
 });
 const inputTitleRef = ref();
+
 const isShowingForm = computed(
   () => props.card.id === store.value.editingCardId
 );
@@ -55,7 +56,7 @@ const isShowingForm = computed(
         >
         <Button
           type="button"
-          @click="store.value.editingCardId = null"
+          @click="store.editingCardId = null"
           class="px-4 py=2 text-sm font-medium text-gray-700 hover:text-black rounded-md focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 focus:outline-none"
           >Cancel</Button
         >
