@@ -2,6 +2,7 @@
 // import {DotsHorizontalIcon, PencilIcon, PlusIcon} from "@heroicons/vue/solid";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import CardListItemCreateForm from "@/Pages/Boards/CardListItemCreateForm.vue";
+import CardListItem from "@/Pages/Boards/CardListItem.vue";
 import { ref } from "vue";
 
 const props = defineProps({
@@ -61,18 +62,12 @@ function onCardCreated() {
     <div class="flex flex-col pb-3 overflow-hidden">
       <div class="flex-1 px-3 overflow-y-auto" ref="listRef">
         <ul class="space-y-3">
-          <li
+          <CardListItem
             v-for="card in list.cards"
             :key="card.id"
+            :card="card"
             class="relative p-3 bg-white border-b border-gray-300 group shadow-rounded-md hover:border-gray-500"
-          >
-            <a href="#" class="text-sm"> {{ card.title }}</a>
-            <button
-              class="absolute hidden w-8 h-8 text-gray-600 bg-gray-500 rounded-md group-hover:grid top-1 right-1 place-content-center hover:text-black hover:bg-gray-200"
-            >
-              <PencilIcon class="w-5 h-5" />
-            </button>
-          </li>
+          />
         </ul>
       </div>
       <div class="px-3 mt-3">
