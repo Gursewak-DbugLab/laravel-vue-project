@@ -2,6 +2,7 @@
 import { PlusIcon } from "@heroicons/vue/24/outline";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { nextTick, ref, watch } from "vue";
+import { store } from "@/store";
 
 const props = defineProps({
   list: Object,
@@ -10,7 +11,7 @@ const props = defineProps({
 const emit = defineEmits(["created"]);
 
 async function showForm() {
-  isShowingForm.value = true;
+  store.value.listCreatingCardId = props.list.id;
   await nextTick();
   inputNameRef.value.focus();
 }
@@ -30,7 +31,9 @@ const form = useForm({
   board_id: props.list.board_id,
 });
 const inputNameRef = ref();
-const isShowingForm = ref(false);
+const isShowingForm = computed(
+  () => props.list.id === store.value.listCreatingCardId
+);
 </script>
 <template>
   <form
@@ -54,7 +57,7 @@ const isShowingForm = ref(false);
       >
       <Button
         type="button"
-        @click="isShowingForm = false"
+        @click="store.listCreatingCardId = null"
         class="px-4 py=2 text-sm font-medium text-gray-700 hover:text-black rounded-md focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 focus:outline-none"
         >Cancel</Button
       >

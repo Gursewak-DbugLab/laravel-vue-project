@@ -1,7 +1,8 @@
 <script setup>
 import { PencilIcon } from "@heroicons/vue/24/outline";
-import { nextTick, ref } from "vue";
+import { computed, nextTick, ref } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
+import { store } from "@/store";
 
 const props = defineProps({
   card: Object,
@@ -9,21 +10,23 @@ const props = defineProps({
 const emit = defineEmits(["created"]);
 
 async function showForm() {
-  isShowingForm.value = true;
+  store.value.editingCardId = props.card.id;
   await nextTick();
   inputTitleRef.value.focus();
 }
 
 function onSubmit() {
   form.put(route("cards.update", { card: props.card.id }), {
-    onSuccess: () => (isShowingForm.value = false),
+    onSuccess: () => (store.value.editingCardId = null),
   });
 }
 const form = useForm({
   title: props.card.title,
 });
 const inputTitleRef = ref();
-const isShowingForm = ref(false);
+const isShowingForm = computed(
+  () => props.card.id === store.value.editingCardId
+);
 </script>
 
 <template>
@@ -52,7 +55,7 @@ const isShowingForm = ref(false);
         >
         <Button
           type="button"
-          @click="isShowingForm = false"
+          @click="store.value.editingCardId = null"
           class="px-4 py=2 text-sm font-medium text-gray-700 hover:text-black rounded-md focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 focus:outline-none"
           >Cancel</Button
         >
