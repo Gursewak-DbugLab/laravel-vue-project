@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('card_list_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->longText('description')->nullable();
+            $table->double('position');
             $table->timestamps();
             $table->softDeletes();
         });

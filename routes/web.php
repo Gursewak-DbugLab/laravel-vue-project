@@ -36,6 +36,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/boards/{board}/lists', [CardListController::class, 'store'])->name('cardLists.store');
     Route::post('/cards', [CardController::class, 'store'])->name('cards.store');
     Route::put('/cards/{card}', [CardController::class, 'update'])->name('cards.update');
+    Route::put('/cards/{card}/move', [CardController::class, 'move'])->name('cards.move');
+
 });
 
 require __DIR__.'/auth.php';
