@@ -17,6 +17,10 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/tiny', function () {
+    return Inertia::render('Tiny');
+})->name('tiny');
+
 // Route::get('/boards', function () {
 //     return Inertia::render('Boards');
 // })->middleware(['auth', 'verified'])->name('boards');

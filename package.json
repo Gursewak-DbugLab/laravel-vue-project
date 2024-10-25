@@ -22,6 +22,7 @@
         "@headlessui/vue": "^1.7.23",
         "@heroicons/vue": "^2.1.5",
         "@inertiajs/inertia-vue3": "^0.6.0",
+        "@tinymce/tinymce-vue": "^5.1.1",
         "vuedraggable": "^4.1.0"
     }
 }
